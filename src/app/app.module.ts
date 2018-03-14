@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPageModule } from '../pages/login/login.module';
 import { UsersProvider } from '../providers/users/users';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { UsersProvider } from '../providers/users/users';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     LoginPageModule,
+    HttpModule
     
   ],
   bootstrap: [IonicApp],
