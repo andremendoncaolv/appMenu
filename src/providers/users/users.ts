@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Http } from '@angular/http';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
@@ -16,17 +16,38 @@ export class UsersProvider {
   login(email: string, senha: string){
     return new Promise((resolve, reject) =>{
       var data ={
-        email : email,
-        senha : senha
+        email: email,
+        senha: senha
       };
+      
+      /**
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        Authorization: 'Basic bWFub2VsOnU1UDV5N1Uz',
+        'Access-Control-Allow-Origin': '*'
+      });
 
-      this.http.post(this.API_URL_LOGIN, data)
+      let options = new RequestOptions({ headers: headers, body: data});
+
+
+
+      this.http.post(this.API_URL_LOGIN, data, options)
+      this.http.post(this.API_URL_LOGIN, options)
         .subscribe((result: any) => {
         resolve(result.json())
-        },
+        /}),
       (error) =>{
-        reject(error.json());
-      })
+      reject(error);
+      }
+      */
+      this.http.get(this.API_REST_LOGIN)
+      .subscribe((result: any) => {
+        //resolve(result.jason())
+        console.log(result[0]);
+      }),
+      (error) => {
+        reject(error);
+      }
     });
    }
 }

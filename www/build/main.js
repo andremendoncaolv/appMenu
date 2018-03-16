@@ -120,16 +120,19 @@ var LoginPage = (function () {
         this.navParams = navParams;
         this.toast = toast;
         this.userProvider = userProvider;
-        this.model = new User();
-        this.model.email = "email";
-        this.model.senha = "senha";
+        // this.model = new User();
+        //this.model.email = this.email
+        //this.model.senha = this.senha;
     }
     LoginPage.prototype.login = function () {
         var _this = this;
         console.log("login()");
-        this.userProvider.login(this.model.email, this.model.senha)
+        this.userProvider.login(this.email, this.senha)
             .then(function (result) {
-            _this.toast.create({ message: "Usuário logado com sucesso Token: " + result.token, position: "botton", duration: 3000 }).present();
+            if (result != null) {
+                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
+                _this.toast.create({ message: "Usuário logado com sucesso Token: " + result.token, position: "botton", duration: 3000 }).present();
+            }
         })
             .catch(function (error) {
             _this.toast.create({ message: "Erro ao logar o usuário. " + error.detail, position: "botton", duration: 3000 }).present();
@@ -149,7 +152,7 @@ var LoginPage = (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/'<ion-content padding style="background:url(assets/img/5iCndnD2SVKQ1M71ASut_site-header-brand.png) no-repeat center;background-size:cover;" id="page1">\n  <div class="spacer" style="width:300px;height:47px;" id="login-spacer2"></div>\n  <img src="assets/img/UmvrjHaDTx72zuTjGSaY_unnamed.png" style="display:block;width:50%;height:auto;margin-left:auto;margin-right:auto;" />\n  <div class="spacer" style="width:300px;height:27px;" id="login-spacer1"></div>\n  <form id="login-form1">\n    <ion-item id="login-input2">\n      <ion-label></ion-label>\n      <ion-input type="email" placeholder="Email" name="email"></ion-input>\n    </ion-item>\n    <ion-item id="login-input3">\n      <ion-label></ion-label>\n      <ion-input type="password" placeholder="Senha" name="senha"></ion-input>\n    </ion-item>\n    <div class="spacer" style="width:300px;height:27px;" id="login-spacer3"></div>\n    <button id="login-button1" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="login()">\n      Login\n    </button>\n    <button id="login-button7" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="goToEsqueciASenha()">\n      Esqueci a Senha\n    </button>\n  </form>\n</ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/'<ion-content padding style="background:url(assets/img/5iCndnD2SVKQ1M71ASut_site-header-brand.png) no-repeat center;background-size:cover;" id="page1">\n  <div class="spacer" style="width:300px;height:47px;" id="login-spacer2"></div>\n  <img src="assets/img/UmvrjHaDTx72zuTjGSaY_unnamed.png" style="display:block;width:50%;height:auto;margin-left:auto;margin-right:auto;" />\n  <div class="spacer" style="width:300px;height:27px;" id="login-spacer1"></div>\n  <form id="login-form1">\n    <ion-item id="login-input2">\n      <ion-label></ion-label>\n      <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>\n    </ion-item>\n    <ion-item id="login-input3">\n      <ion-label></ion-label>\n      <ion-input type="password" placeholder="Senha" name="senha" [(ngModel)]="senha"></ion-input>\n    </ion-item>\n    <div class="spacer" style="width:300px;height:27px;" id="login-spacer3"></div>\n    <button id="login-button1" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="login()">\n      Login\n    </button>\n    <button id="login-button7" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="goToEsqueciASenha()">\n      Esqueci a Senha\n    </button>\n  </form>\n</ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */]])
@@ -202,12 +205,34 @@ var UsersProvider = (function () {
                 email: email,
                 senha: senha
             };
-            _this.http.post(_this.API_URL_LOGIN, data)
-                .subscribe(function (result) {
-                resolve(result.json());
-            }, function (error) {
-                reject(error.json());
+            /**
+            let headers = new Headers({
+              'Content-Type': 'application/json',
+              Authorization: 'Basic bWFub2VsOnU1UDV5N1Uz',
+              'Access-Control-Allow-Origin': '*'
             });
+      
+            let options = new RequestOptions({ headers: headers, body: data});
+      
+      
+      
+            this.http.post(this.API_URL_LOGIN, data, options)
+            this.http.post(this.API_URL_LOGIN, options)
+              .subscribe((result: any) => {
+              resolve(result.json())
+              /}),
+            (error) =>{
+            reject(error);
+            }
+            */
+            _this.http.get(_this.API_REST_LOGIN)
+                .subscribe(function (result) {
+                //resolve(result.jason())
+                console.log(result[0]);
+            }),
+                function (error) {
+                    reject(error);
+                };
         });
     };
     UsersProvider = __decorate([

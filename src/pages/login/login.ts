@@ -12,20 +12,26 @@ import { UsersProvider } from '../../providers/users/users';
 export class LoginPage {
 
   model: User;
+  email: string;
+  senha: string;
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     private toast: ToastController, private userProvider: UsersProvider) {
-      this.model = new User();
-      this.model.email = "email";
-      this.model.senha = "senha";
+     // this.model = new User();
+      //this.model.email = this.email
+      //this.model.senha = this.senha;
   }
 
   login(){
     console.log("login()");
-    this.userProvider.login(this.model.email, this.model.senha)
+    this.userProvider.login(this.email, this.senha)
         .then((result: any) => {
-        this.toast.create({message: "Usuário logado com sucesso Token: " + result.token, position: "botton", duration: 3000}).present();
+        if(result != null){
+          this.navCtrl.push(HomePage);
+          this.toast.create({message: "Usuário logado com sucesso Token: " + result.token, position: "botton", duration: 3000}).present();
+        }
+        
      })
      .catch((error: any) => {
         this.toast.create({message: "Erro ao logar o usuário. " + error.detail, position: "botton", duration: 3000}).present();
