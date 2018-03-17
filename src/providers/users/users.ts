@@ -42,8 +42,12 @@ export class UsersProvider {
       */
       this.http.get(this.API_REST_LOGIN)
       .subscribe((result: any) => {
-        //resolve(result.jason())
-        console.log(result[0]);
+        resolve(result.json())
+        if(result != null){
+         
+          console.log(result[0]);
+        }
+        
       }),
       (error) => {
         reject(error);

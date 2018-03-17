@@ -227,8 +227,10 @@ var UsersProvider = (function () {
             */
             _this.http.get(_this.API_REST_LOGIN)
                 .subscribe(function (result) {
-                //resolve(result.jason())
-                console.log(result[0]);
+                resolve(result.json());
+                if (result != null) {
+                    console.log(result[0]);
+                }
             }),
                 function (error) {
                     reject(error);
@@ -237,9 +239,10 @@ var UsersProvider = (function () {
     };
     UsersProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]) === "function" && _a || Object])
     ], UsersProvider);
     return UsersProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=users.js.map
