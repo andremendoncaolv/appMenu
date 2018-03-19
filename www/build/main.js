@@ -120,35 +120,36 @@ var LoginPage = (function () {
         this.navParams = navParams;
         this.toast = toast;
         this.userProvider = userProvider;
-        // this.model = new User();
-        //this.model.email = this.email
-        //this.model.senha = this.senha;
     }
     LoginPage.prototype.login = function () {
         var _this = this;
-        console.log("login()");
         this.userProvider.login(this.email, this.senha)
             .then(function (result) {
-            if (result != null) {
+            if (!isEmpty(result)) {
                 _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
-                _this.toast.create({ message: "Usuário logado com sucesso Token: " + result.token, position: "botton", duration: 3000 }).present();
+                _this.toast.create({ message: "Usuário logado com sucesso. ", duration: 3000 }).present();
+            }
+            else {
+                _this.toast.create({ message: "Erro ao tentar logar.", duration: 3000 }).present();
             }
         })
             .catch(function (error) {
-            _this.toast.create({ message: "Erro ao logar o usuário. " + error.detail, position: "botton", duration: 3000 }).present();
+            _this.toast.create({ message: "Erro ao tentar logar.", duration: 3000 }).present();
         });
+        //Valida se o objeto esta preenchido.
+        function isEmpty(obj) {
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop))
+                    return false;
+            }
+            return true;
+        }
     };
     LoginPage.prototype.goToMuralDeMensagens = function (params) {
         '';
         if (!params)
             params = {};
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
-    };
-    LoginPage.prototype.goToEsqueciASenha = function (params) {
-        console.log("goToEsqueciASenha");
-        if (!params)
-            params = {};
-        //this.navCtrl.push(HomePage);
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -194,43 +195,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var UsersProvider = (function () {
     function UsersProvider(http) {
         this.http = http;
-        this.API_URL_LOGIN = "http://emileweb.pythonanywhere.com/login/";
-        this.API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/";
+        this.API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/?email=";
     }
     // MÉTODO PARA CONSULTAR LOGIN
     UsersProvider.prototype.login = function (email, senha) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            var data = {
-                email: email,
-                senha: senha
-            };
-            /**
-            let headers = new Headers({
-              'Content-Type': 'application/json',
-              Authorization: 'Basic bWFub2VsOnU1UDV5N1Uz',
-              'Access-Control-Allow-Origin': '*'
-            });
-      
-            let options = new RequestOptions({ headers: headers, body: data});
-      
-      
-      
-            this.http.post(this.API_URL_LOGIN, data, options)
-            this.http.post(this.API_URL_LOGIN, options)
-              .subscribe((result: any) => {
-              resolve(result.json())
-              /}),
-            (error) =>{
-            reject(error);
+            if (email != null && senha != null) {
+                var data = {
+                    email: email,
+                    senha: senha
+                };
             }
-            */
-            _this.http.get(_this.API_REST_LOGIN)
+            else {
+                (function (error) {
+                    reject(error);
+                });
+            }
+            _this.http.get(_this.API_REST_LOGIN + data.email + '&senha=', data.senha)
                 .subscribe(function (result) {
                 resolve(result.json());
-                if (result != null) {
-                    console.log(result[0]);
-                }
             }),
                 function (error) {
                     reject(error);
@@ -239,10 +223,9 @@ var UsersProvider = (function () {
     };
     UsersProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]])
     ], UsersProvider);
     return UsersProvider;
-    var _a;
 }());
 
 //# sourceMappingURL=users.js.map

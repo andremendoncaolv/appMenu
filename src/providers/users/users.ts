@@ -5,49 +5,27 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UsersProvider {
-  private API_URL_LOGIN = "http://emileweb.pythonanywhere.com/login/";
-
-  private API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/";
+  private API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/?email=";
 
   constructor(public http : Http){
    } 
 
-   // MÉTODO PARA CONSULTAR LOGIN
+  // MÉTODO PARA CONSULTAR LOGIN
   login(email: string, senha: string){
     return new Promise((resolve, reject) =>{
+      if(email != null && senha != null){
       var data ={
         email: email,
         senha: senha
       };
-      
-      /**
-      let headers = new Headers({
-        'Content-Type': 'application/json',
-        Authorization: 'Basic bWFub2VsOnU1UDV5N1Uz',
-        'Access-Control-Allow-Origin': '*'
-      });
-
-      let options = new RequestOptions({ headers: headers, body: data});
-
-
-
-      this.http.post(this.API_URL_LOGIN, data, options)
-      this.http.post(this.API_URL_LOGIN, options)
-        .subscribe((result: any) => {
-        resolve(result.json())
-        /}),
-      (error) =>{
-      reject(error);
+    }else{
+      (error) => {
+        reject(error);
       }
-      */
-      this.http.get(this.API_REST_LOGIN)
+    }      
+      this.http.get(this.API_REST_LOGIN + data.email + '&senha=', data.senha)
       .subscribe((result: any) => {
         resolve(result.json())
-        if(result != null){
-         
-          console.log(result[0]);
-        }
-        
       }),
       (error) => {
         reject(error);
