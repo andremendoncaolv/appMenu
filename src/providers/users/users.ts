@@ -6,6 +6,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UsersProvider {
   private API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/?email=";
+  private API_REST_MENSAGEM = "http://renatoln.pythonanywhere.com/mensagens/?destinatario=";
+  private API_REST_USUARIOS = "http://renatoln.pythonanywhere.com/usuarios/?id=";
 
   constructor(public http : Http){
    } 
@@ -29,6 +31,41 @@ export class UsersProvider {
       }),
       (error) => {
         reject(error);
+      }
+    });
+   }
+   
+   listarMensagens(id: number){
+    return new Promise((resolve, reject) =>{
+      if(id != null){
+      var objeto ={
+        id: id
+      };
+    }else{
+      (error) => {
+        reject(error);
+      }
+    }      
+      this.http.get(this.API_REST_MENSAGEM + objeto.id)
+      .subscribe((result: any) => {
+        resolve(result.json())
+      }),
+      (error) => {
+        reject(error);
+      }
+    });
+   }
+
+   listarUsuarios(){
+    return new Promise((resolve, reject) =>{        
+      this.http.get(this.API_REST_USUARIOS)
+      .subscribe((result: any) => {
+        resolve(result.json())
+      }),
+      (error) => {
+        reject(error);
+        console.log("lista usuario");
+        console.log("result");
       }
     });
    }

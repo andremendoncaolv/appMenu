@@ -14,6 +14,9 @@ export class LoginPage {
   model: User;
   email: string;
   senha: string;
+  private usuarioLogado: any;
+  private listaMensagens = new Array<any>();
+  private listaUsuarios = new Array<any>();
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
@@ -23,8 +26,17 @@ export class LoginPage {
   login(){    
     this.userProvider.login(this.email, this.senha)
         .then((result: any) => {
-        if(!isEmpty(result)){          
-          this.navCtrl.push(HomePage);
+          this.usuarioLogado = result;
+        if(!isEmpty(this.usuarioLogado[0])){    
+          
+          this.consultaMensagem(this.usuarioLogado[0].id) ;      
+          /*this.navCtrl.push(HomePage);
+          this.userProvider.listarMensagens(this.usuarioLogado[0].id)
+
+            .then((result: any) =>{
+            this.listaMensagens = result;
+            })
+            */
           this.toast.create({message: "Usuário logado com sucesso. ", duration: 3000}).present();
         }else{
           this.toast.create({message: "Erro ao tentar logar.", duration: 3000}).present();
@@ -44,7 +56,28 @@ export class LoginPage {
         return true;
     }
   }
-  
+  consultaMensagem(id: number){
+    this.userProvider.listarMensagens(id)
+      .then((result: any) =>{
+        this.listaMensagens = result;
+        console.log("passei aqui");
+        console.log(this.listaMensagens);
+        this.consultaUsuarios();
+        this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens});
+    })
+  }
+
+  consultaUsuarios(){
+    this.userProvider.listarUsuarios()
+    .then((result: any) =>{
+      this.listaUsuarios = result;
+
+      
+      console.log("lista usuario");
+      console.log(this.listaUsuarios);
+      //this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens});
+  })
+  }
  
   goToMuralDeMensagens(params){''
     if (!params) params = {};

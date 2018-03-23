@@ -120,13 +120,23 @@ var LoginPage = (function () {
         this.navParams = navParams;
         this.toast = toast;
         this.userProvider = userProvider;
+        this.listaMensagens = new Array();
+        this.listaUsuarios = new Array();
     }
     LoginPage.prototype.login = function () {
         var _this = this;
         this.userProvider.login(this.email, this.senha)
             .then(function (result) {
-            if (!isEmpty(result)) {
-                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
+            _this.usuarioLogado = result;
+            if (!isEmpty(_this.usuarioLogado[0])) {
+                _this.consultaMensagem(_this.usuarioLogado[0].id);
+                /*this.navCtrl.push(HomePage);
+                this.userProvider.listarMensagens(this.usuarioLogado[0].id)
+      
+                  .then((result: any) =>{
+                  this.listaMensagens = result;
+                  })
+                  */
                 _this.toast.create({ message: "Usuário logado com sucesso. ", duration: 3000 }).present();
             }
             else {
@@ -145,6 +155,27 @@ var LoginPage = (function () {
             return true;
         }
     };
+    LoginPage.prototype.consultaMensagem = function (id) {
+        var _this = this;
+        this.userProvider.listarMensagens(id)
+            .then(function (result) {
+            _this.listaMensagens = result;
+            console.log("passei aqui");
+            console.log(_this.listaMensagens);
+            _this.consultaUsuarios();
+            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */], { listaMensagens: _this.listaMensagens });
+        });
+    };
+    LoginPage.prototype.consultaUsuarios = function () {
+        var _this = this;
+        this.userProvider.listarUsuarios()
+            .then(function (result) {
+            _this.listaUsuarios = result;
+            console.log("lista usuario");
+            console.log(_this.listaUsuarios);
+            //this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens});
+        });
+    };
     LoginPage.prototype.goToMuralDeMensagens = function (params) {
         '';
         if (!params)
@@ -153,7 +184,7 @@ var LoginPage = (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/'<ion-content padding style="background:url(assets/img/5iCndnD2SVKQ1M71ASut_site-header-brand.png) no-repeat center;background-size:cover;" id="page1">\n  <div class="spacer" style="width:300px;height:47px;" id="login-spacer2"></div>\n  <img src="assets/img/UmvrjHaDTx72zuTjGSaY_unnamed.png" style="display:block;width:50%;height:auto;margin-left:auto;margin-right:auto;" />\n  <div class="spacer" style="width:300px;height:27px;" id="login-spacer1"></div>\n  <form id="login-form1">\n    <ion-item id="login-input2">\n      <ion-label></ion-label>\n      <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>\n    </ion-item>\n    <ion-item id="login-input3">\n      <ion-label></ion-label>\n      <ion-input type="password" placeholder="Senha" name="senha" [(ngModel)]="senha"></ion-input>\n    </ion-item>\n    <div class="spacer" style="width:300px;height:27px;" id="login-spacer3"></div>\n    <button id="login-button1" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="login()">\n      Login\n    </button>\n    <button id="login-button7" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="goToEsqueciASenha()">\n      Esqueci a Senha\n    </button>\n  </form>\n</ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/'<ion-content padding style="background:url(assets/img/5iCndnD2SVKQ1M71ASut_site-header-brand.png) no-repeat center;background-size:cover;" id="page1">\n  <div class="spacer" style="width:300px;height:47px;" id="login-spacer2"></div>\n  <img src="assets/img/UmvrjHaDTx72zuTjGSaY_unnamed.png" style="display:block;width:50%;height:auto;margin-left:auto;margin-right:auto;" />\n  <div class="spacer" style="width:300px;height:27px;" id="login-spacer1"></div>\n  <form id="login-form1">\n    <ion-item id="login-input2">\n      <ion-label></ion-label>\n      <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>\n    </ion-item>\n    <ion-item id="login-input3">\n      <ion-label></ion-label>\n      <ion-input type="password" placeholder="Senha" name="senha" [(ngModel)]="senha"></ion-input>\n    </ion-item>\n    <div class="spacer" style="width:300px;height:27px;" id="login-spacer3"></div>\n    <button id="login-button1" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="login()">\n      Login\n    </button>\n    <!--<button id="login-button7" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="goToEsqueciASenha()">\n      Esqueci a Senha\n    </button>-->\n  </form>\n</ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */]])
@@ -196,6 +227,8 @@ var UsersProvider = (function () {
     function UsersProvider(http) {
         this.http = http;
         this.API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/?email=";
+        this.API_REST_MENSAGEM = "http://renatoln.pythonanywhere.com/mensagens/?destinatario=";
+        this.API_REST_USUARIOS = "http://renatoln.pythonanywhere.com/usuarios/?id=";
     }
     // MÉTODO PARA CONSULTAR LOGIN
     UsersProvider.prototype.login = function (email, senha) {
@@ -218,6 +251,42 @@ var UsersProvider = (function () {
             }),
                 function (error) {
                     reject(error);
+                };
+        });
+    };
+    UsersProvider.prototype.listarMensagens = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (id != null) {
+                var objeto = {
+                    id: id
+                };
+            }
+            else {
+                (function (error) {
+                    reject(error);
+                });
+            }
+            _this.http.get(_this.API_REST_MENSAGEM + objeto.id)
+                .subscribe(function (result) {
+                resolve(result.json());
+            }),
+                function (error) {
+                    reject(error);
+                };
+        });
+    };
+    UsersProvider.prototype.listarUsuarios = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.http.get(_this.API_REST_USUARIOS)
+                .subscribe(function (result) {
+                resolve(result.json());
+            }),
+                function (error) {
+                    reject(error);
+                    console.log("lista usuario");
+                    console.log("result");
                 };
         });
     };
@@ -470,14 +539,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var HomePage = (function () {
-    function HomePage(navCtrl) {
+    function HomePage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.lista_mensagens = new Array();
+        console.log("construtor home");
+        this.lista_mensagens = this.navParams.get("listaMensagens");
+        console.log(this.lista_mensagens);
     }
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n        Mural de Mensagens\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n  <ion-content padding id="page2" style="background-color:#FFFFFF;">\n    <form id="muralDeMensagens-form5">\n      <div class="spacer" style="width:300px;height:12px;" id="muralDeMensagens-spacer9"></div>\n      <ion-searchbar placeholder="Buscar recados" name="" id="muralDeMensagens-search2"></ion-searchbar>\n    </form>\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n    <ion-card id="muralDeMensagens-card21">\n      <ion-list>\n        <ion-item-sliding>\n          <ion-item color="calm" id="muralDeMensagens-list-item16">\n            <ion-avatar item-left>\n              <img />\n            </ion-avatar>\n            <h2>\n              Prof: Nome Professor\n            </h2>\n          </ion-item>\n          <ion-item-options side="left">\n            <button ion-button color="light"></button>\n          </ion-item-options>\n        </ion-item-sliding>\n        <ion-item id="muralDeMensagens-list-item-container5">\n          <div id="muralDeMensagens-markdown9" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#4DA0CF;">\n              Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos\n            </p>\n          </div>\n        </ion-item>\n        <ion-item id="muralDeMensagens-list-item-container7">\n          <div id="muralDeMensagens-markdown11" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#248088;">\n              31/12/2017, às 00:00\n            </p>\n          </div>\n        </ion-item>\n      </ion-list>\n    </ion-card>\n    <ion-card id="muralDeMensagens-card23">\n      <ion-list>\n        <ion-item color="calm" id="muralDeMensagens-list-item19">\n          <ion-avatar item-left>\n            <img />\n          </ion-avatar>\n          <h2>\n            Prof: Teste Professor\n          </h2>\n        </ion-item>\n        <div style="width:100%;height:220px;margin:0px 0px;line-height:250px;background-color:#e8ebef;text-align:center;">\n          <i class="icon ion-image" style="font-size:64px;color:#888;vertical-align:middle;"></i>\n        </div>\n        <ion-item id="muralDeMensagens-list-item-container8">\n          <div id="muralDeMensagens-markdown12" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#4DA0CF;">\n              Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos\n            </p>\n          </div>\n        </ion-item>\n        <ion-item id="muralDeMensagens-list-item-container9">\n          <div id="muralDeMensagens-markdown13" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#248088;">\n              31/12/2017, às 00:00\n            </p>\n          </div>\n        </ion-item>\n      </ion-list>\n    </ion-card>\n  </ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n        Mural de Mensagens\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n  <ion-content padding id="page2" style="background-color:#FFFFFF;">\n    <<!--form id="muralDeMensagens-form5">\n      <div class="spacer" style="width:300px;height:12px;" id="muralDeMensagens-spacer9"></div>\n      <ion-searchbar placeholder="Buscar recados" name="" id="muralDeMensagens-search2"></ion-searchbar>\n    </form>-->\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n    <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista_mensagens">\n        <ion-card-header>\n            Prof: Nome Professor {{mensagem.remetente}}\n          </ion-card-header>\n          <ion-card-content>\n              Mensagem: \n              {{mensagem.texto}}\n          </ion-card-content>\n          <ion-item>\n              <ion-label>Data</ion-label>\n              <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>\n            </ion-item>\n      <!--<ion-list>\n        <ion-item-sliding>\n          <ion-item color="calm" id="muralDeMensagens-list-item16">\n            <!--<ion-avatar item-left>\n              <img />\n            </ion-avatar>\n            <h2>\n              Prof: Nome Professor {{mensagem.remetente}}\n            </h2>\n          </ion-item>\n          <ion-item-options side="left">\n            <button ion-button color="light"></button>\n          </ion-item-options>\n        </ion-item-sliding>\n        <ion-item id="muralDeMensagens-list-item-container5">\n          <div id="muralDeMensagens-markdown9" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#4DA0CF;">\n              Mensagem: \n              {{mensagem.texto}}\n            </p>\n          </div>\n        </ion-item>\n       <!-- <ion-item id="muralDeMensagens-list-item-container7">\n          <div id="muralDeMensagens-markdown11" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#248088;">\n              Data: {{mensagem.data}}\n            </p>\n          </div>\n        </ion-item>\n        <ion-item>\n            <ion-label>Date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>\n          </ion-item>\n      </ion-list>-->\n    </ion-card>\n    \n  </ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], HomePage);
     return HomePage;
 }());
