@@ -11,12 +11,12 @@ import { UsersProvider } from '../../providers/users/users';
 })
 export class LoginPage {
 
-  model: User;
   email: string;
   senha: string;
   private usuarioLogado: any;
   private listaMensagens = new Array<any>();
   private listaUsuarios = new Array<any>();
+  private lista = new Array<any>();
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
@@ -28,7 +28,9 @@ export class LoginPage {
         .then((result: any) => {
           this.usuarioLogado = result;
         if(!isEmpty(this.usuarioLogado[0])){    
-          
+          console.log("USUARIO LOGADO")
+          console.log(this.usuarioLogado);
+          this.consultaUsuarios();
           this.consultaMensagem(this.usuarioLogado[0].id) ;      
           /*this.navCtrl.push(HomePage);
           this.userProvider.listarMensagens(this.usuarioLogado[0].id)
@@ -57,13 +59,32 @@ export class LoginPage {
     }
   }
   consultaMensagem(id: number){
+    console.log("OBJETO USUARIO");
+    console.log(id);
     this.userProvider.listarMensagens(id)
       .then((result: any) =>{
         this.listaMensagens = result;
-        console.log("passei aqui");
-        console.log(this.listaMensagens);
-        this.consultaUsuarios();
-        this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens});
+
+        var i;
+        var obj;
+        var j = 0;
+        var r = 0;
+        for(i=0; i < this.listaMensagens.length; i++){
+          for(j=0; j < this.listaUsuarios.length; j++){
+            if (this.listaMensagens[i].remetente == this.listaUsuarios[j].id){
+              obj = {
+                tituloMensagem: this.listaMensagens[i].titulo,
+                textoMensagem: this.listaMensagens[i].texto,
+                nomeRemetente: this.listaUsuarios[j].nome,
+                dataEnvioMensagem: this.listaMensagens[i].data
+              }
+              this.lista[r] = obj;
+              r++;
+            }
+          }
+         }
+         console.log(this.lista);        
+        this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens, lista: this.lista});
     })
   }
 
@@ -71,9 +92,7 @@ export class LoginPage {
     this.userProvider.listarUsuarios()
     .then((result: any) =>{
       this.listaUsuarios = result;
-
-      
-      console.log("lista usuario");
+      console.log("LISTA DE USUARIOS");
       console.log(this.listaUsuarios);
       //this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens});
   })
@@ -93,7 +112,16 @@ export class LoginPage {
   
   
 }
-export class User{
-  email: string;
-  senha: string;
+export class listaRetorno{
+  id: string // usuario
+  email: string; //usuario
+  senha: string; //usuario
+  nomeRemetente: string; //lista de usuarios
+  emailRemetente: string;
+  cargoRemetente: string;
+  tituloMensagem: string;
+  textoMensagem: string;
+  dataMensagem: string;
+  nomeUsuario: string
+
 }

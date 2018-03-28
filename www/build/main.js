@@ -96,7 +96,7 @@ var LoginPageModule = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
-/* unused harmony export User */
+/* unused harmony export listaRetorno */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(77);
@@ -122,6 +122,7 @@ var LoginPage = (function () {
         this.userProvider = userProvider;
         this.listaMensagens = new Array();
         this.listaUsuarios = new Array();
+        this.lista = new Array();
     }
     LoginPage.prototype.login = function () {
         var _this = this;
@@ -129,6 +130,9 @@ var LoginPage = (function () {
             .then(function (result) {
             _this.usuarioLogado = result;
             if (!isEmpty(_this.usuarioLogado[0])) {
+                console.log("USUARIO LOGADO");
+                console.log(_this.usuarioLogado);
+                _this.consultaUsuarios();
                 _this.consultaMensagem(_this.usuarioLogado[0].id);
                 /*this.navCtrl.push(HomePage);
                 this.userProvider.listarMensagens(this.usuarioLogado[0].id)
@@ -157,13 +161,31 @@ var LoginPage = (function () {
     };
     LoginPage.prototype.consultaMensagem = function (id) {
         var _this = this;
+        console.log("OBJETO USUARIO");
+        console.log(id);
         this.userProvider.listarMensagens(id)
             .then(function (result) {
             _this.listaMensagens = result;
-            console.log("passei aqui");
-            console.log(_this.listaMensagens);
-            _this.consultaUsuarios();
-            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */], { listaMensagens: _this.listaMensagens });
+            var i;
+            var obj;
+            var j = 0;
+            var r = 0;
+            for (i = 0; i < _this.listaMensagens.length; i++) {
+                for (j = 0; j < _this.listaUsuarios.length; j++) {
+                    if (_this.listaMensagens[i].remetente == _this.listaUsuarios[j].id) {
+                        obj = {
+                            tituloMensagem: _this.listaMensagens[i].titulo,
+                            textoMensagem: _this.listaMensagens[i].texto,
+                            nomeRemetente: _this.listaUsuarios[j].nome,
+                            dataEnvioMensagem: _this.listaMensagens[i].data
+                        };
+                        _this.lista[r] = obj;
+                        r++;
+                    }
+                }
+            }
+            console.log(_this.lista);
+            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */], { listaMensagens: _this.listaMensagens, lista: _this.lista });
         });
     };
     LoginPage.prototype.consultaUsuarios = function () {
@@ -171,7 +193,7 @@ var LoginPage = (function () {
         this.userProvider.listarUsuarios()
             .then(function (result) {
             _this.listaUsuarios = result;
-            console.log("lista usuario");
+            console.log("LISTA DE USUARIOS");
             console.log(_this.listaUsuarios);
             //this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens});
         });
@@ -192,10 +214,10 @@ var LoginPage = (function () {
     return LoginPage;
 }());
 
-var User = (function () {
-    function User() {
+var listaRetorno = (function () {
+    function listaRetorno() {
     }
-    return User;
+    return listaRetorno;
 }());
 
 //# sourceMappingURL=login.js.map
@@ -228,7 +250,7 @@ var UsersProvider = (function () {
         this.http = http;
         this.API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/?email=";
         this.API_REST_MENSAGEM = "http://renatoln.pythonanywhere.com/mensagens/?destinatario=";
-        this.API_REST_USUARIOS = "http://renatoln.pythonanywhere.com/usuarios/?id=";
+        this.API_REST_USUARIOS = "http://renatoln.pythonanywhere.com/usuarios/";
     }
     // MÉTODO PARA CONSULTAR LOGIN
     UsersProvider.prototype.login = function (email, senha) {
@@ -543,13 +565,14 @@ var HomePage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.lista_mensagens = new Array();
-        console.log("construtor home");
-        this.lista_mensagens = this.navParams.get("listaMensagens");
-        console.log(this.lista_mensagens);
+        this.lista = new Array();
+        //this.lista_mensagens = this.navParams.get('listaMensagens');
+        this.lista = this.navParams.get('lista');
+        console.log(this.lista);
     }
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n        Mural de Mensagens\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n  <ion-content padding id="page2" style="background-color:#FFFFFF;">\n    <<!--form id="muralDeMensagens-form5">\n      <div class="spacer" style="width:300px;height:12px;" id="muralDeMensagens-spacer9"></div>\n      <ion-searchbar placeholder="Buscar recados" name="" id="muralDeMensagens-search2"></ion-searchbar>\n    </form>-->\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n    <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista_mensagens">\n        <ion-card-header>\n            Prof: Nome Professor {{mensagem.remetente}}\n          </ion-card-header>\n          <ion-card-content>\n              Mensagem: \n              {{mensagem.texto}}\n          </ion-card-content>\n          <ion-item>\n              <ion-label>Data</ion-label>\n              <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>\n            </ion-item>\n      <!--<ion-list>\n        <ion-item-sliding>\n          <ion-item color="calm" id="muralDeMensagens-list-item16">\n            <!--<ion-avatar item-left>\n              <img />\n            </ion-avatar>\n            <h2>\n              Prof: Nome Professor {{mensagem.remetente}}\n            </h2>\n          </ion-item>\n          <ion-item-options side="left">\n            <button ion-button color="light"></button>\n          </ion-item-options>\n        </ion-item-sliding>\n        <ion-item id="muralDeMensagens-list-item-container5">\n          <div id="muralDeMensagens-markdown9" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#4DA0CF;">\n              Mensagem: \n              {{mensagem.texto}}\n            </p>\n          </div>\n        </ion-item>\n       <!-- <ion-item id="muralDeMensagens-list-item-container7">\n          <div id="muralDeMensagens-markdown11" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#248088;">\n              Data: {{mensagem.data}}\n            </p>\n          </div>\n        </ion-item>\n        <ion-item>\n            <ion-label>Date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>\n          </ion-item>\n      </ion-list>-->\n    </ion-card>\n    \n  </ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n        Mural de Mensagens\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n  <ion-content padding id="page2" style="background-color:#FFFFFF;">\n    <<!--form id="muralDeMensagens-form5">\n      <div class="spacer" style="width:300px;height:12px;" id="muralDeMensagens-spacer9"></div>\n      <ion-searchbar placeholder="Buscar recados" name="" id="muralDeMensagens-search2"></ion-searchbar>\n    </form>-->\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n    <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista">\n        <ion-card-header>\n            {{mensagem.tituloMensagem}}\n          </ion-card-header>\n          <ion-card-content>\n              Mensagem: \n              {{mensagem.textoMensagem}}\n          </ion-card-content>    \n          <ion-item>\n              Prof: Nome Professor {{mensagem.nomeRemetente}}\n          </ion-item>  \n          <ion-item>\n              <ion-label>Data</ion-label>\n              <!--<ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.dataMensagem></ion-datetime>-->\n            </ion-item>\n      <!--<ion-list>\n        <ion-item-sliding>\n          <ion-item color="calm" id="muralDeMensagens-list-item16">\n            <!--<ion-avatar item-left>\n              <img />\n            </ion-avatar>\n            <h2>\n              Prof: Nome Professor {{mensagem.remetente}}\n            </h2>\n          </ion-item>\n          <ion-item-options side="left">\n            <button ion-button color="light"></button>\n          </ion-item-options>\n        </ion-item-sliding>\n        <ion-item id="muralDeMensagens-list-item-container5">\n          <div id="muralDeMensagens-markdown9" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#4DA0CF;">\n              Mensagem: \n              {{mensagem.texto}}\n            </p>\n          </div>\n        </ion-item>\n       <!-- <ion-item id="muralDeMensagens-list-item-container7">\n          <div id="muralDeMensagens-markdown11" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#248088;">\n              Data: {{mensagem.data}}\n            </p>\n          </div>\n        </ion-item>\n        <ion-item>\n            <ion-label>Date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>\n          </ion-item>\n      </ion-list>-->\n    </ion-card>\n    \n  </ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], HomePage);

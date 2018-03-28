@@ -14,17 +14,20 @@
       <ion-searchbar placeholder="Buscar recados" name="" id="muralDeMensagens-search2"></ion-searchbar>
     </form>-->
     <button ion-button secondary menuToggle>Toggle Menu</button>
-    <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista_mensagens">
+    <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista">
         <ion-card-header>
-            Prof: Nome Professor {{mensagem.remetente}}
+            {{mensagem.tituloMensagem}}
           </ion-card-header>
           <ion-card-content>
               Mensagem: 
-              {{mensagem.texto}}
-          </ion-card-content>
+              {{mensagem.textoMensagem}}
+          </ion-card-content>    
+          <ion-item>
+              Prof: Nome Professor {{mensagem.nomeRemetente}}
+          </ion-item>  
           <ion-item>
               <ion-label>Data</ion-label>
-              <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>
+              <!--<ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.dataMensagem></ion-datetime>-->
             </ion-item>
       <!--<ion-list>
         <ion-item-sliding>
