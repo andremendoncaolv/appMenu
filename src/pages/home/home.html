@@ -1,30 +1,29 @@
 <ion-header>
-    <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>
-        Mural de Mensagens
-      </ion-title>
-    </ion-navbar>
-  </ion-header>
+  <ion-toolbar primary>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title align="center">
+      Mural de Mensagens
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
   <ion-content padding id="page2" style="background-color:#FFFFFF;">
-    <<!--form id="muralDeMensagens-form5">
+    <!--form id="muralDeMensagens-form5">
       <div class="spacer" style="width:300px;height:12px;" id="muralDeMensagens-spacer9"></div>
       <ion-searchbar placeholder="Buscar recados" name="" id="muralDeMensagens-search2"></ion-searchbar>
     </form>-->
-    <button ion-button secondary menuToggle>Toggle Menu</button>
     <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista">
         <ion-card-header>
             {{mensagem.tituloMensagem}}
           </ion-card-header>
           <ion-card-content>
-              Mensagem: 
+              Mensagem:
               {{mensagem.textoMensagem}}
-          </ion-card-content>    
+          </ion-card-content>
           <ion-item>
               Prof: Nome Professor {{mensagem.nomeRemetente}}
-          </ion-item>  
+          </ion-item>
           <ion-item>
               <ion-label>Data</ion-label>
               <!--<ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.dataMensagem></ion-datetime>-->
@@ -46,7 +45,7 @@
         <ion-item id="muralDeMensagens-list-item-container5">
           <div id="muralDeMensagens-markdown9" style="text-align:justify;" class="show-list-numbers-and-dots">
             <p style="margin-top:0px;color:#4DA0CF;">
-              Mensagem: 
+              Mensagem:
               {{mensagem.texto}}
             </p>
           </div>
@@ -64,5 +63,5 @@
           </ion-item>
       </ion-list>-->
     </ion-card>
-    
+
   </ion-content>

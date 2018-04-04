@@ -72,7 +72,7 @@ var PerfilPage = (function () {
     };
     PerfilPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-perfil',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/perfil/perfil.html"*/''/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/perfil/perfil.html"*/,
+            selector: 'page-perfil',template:/*ion-inline-start:"/home/vitor/Desktop/Ionic - Emile/appMenu/src/pages/perfil/perfil.html"*/''/*ion-inline-end:"/home/vitor/Desktop/Ionic - Emile/appMenu/src/pages/perfil/perfil.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], PerfilPage);
