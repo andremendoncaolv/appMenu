@@ -313,12 +313,33 @@ var UsersProvider = (function () {
                 };
         });
     };
+    UsersProvider.prototype.listarDisciplinasAlunos = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (id != null) {
+                var objeto = {
+                    id: id
+                };
+            }
+            else {
+                (function (error) {
+                    reject(error);
+                });
+            }
+            _this.http.get(_this.API_REST_DISCIPLINAS_USUARIO + objeto.id)
+                .subscribe(function (result) {
+                resolve(result.json());
+            }),
+                function (error) {
+                    reject(error);
+                };
+        });
+    };
     UsersProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]])
     ], UsersProvider);
     return UsersProvider;
-    var _a;
 }());
 
 //# sourceMappingURL=users.js.map
