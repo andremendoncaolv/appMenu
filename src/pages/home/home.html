@@ -1,68 +1,31 @@
 <ion-header>
-    <ion-navbar>
+    <!--<ion-navbar>-->
+   <ion-toolbar primary> 
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>
         Mural de Mensagens
       </ion-title>
-    </ion-navbar>
+    <!--</ion-navbar>-->
+    </ion-toolbar>
   </ion-header>
   <ion-content padding id="page2" style="background-color:#FFFFFF;">
-    <<!--form id="muralDeMensagens-form5">
-      <div class="spacer" style="width:300px;height:12px;" id="muralDeMensagens-spacer9"></div>
-      <ion-searchbar placeholder="Buscar recados" name="" id="muralDeMensagens-search2"></ion-searchbar>
-    </form>-->
-    <button ion-button secondary menuToggle>Toggle Menu</button>
+   
+    <!--<button ion-button secondary menuToggle>Menu</button>-->
     <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista">
         <ion-card-header>
-            {{mensagem.tituloMensagem}}
+            Prof:{{mensagem.nomeRemetente}}
           </ion-card-header>
           <ion-card-content>
               Mensagem: 
               {{mensagem.textoMensagem}}
-          </ion-card-content>    
-          <ion-item>
-              Prof: Nome Professor {{mensagem.nomeRemetente}}
-          </ion-item>  
+          </ion-card-content>
           <ion-item>
               <ion-label>Data</ion-label>
-              <!--<ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.dataMensagem></ion-datetime>-->
-            </ion-item>
-      <!--<ion-list>
-        <ion-item-sliding>
-          <ion-item color="calm" id="muralDeMensagens-list-item16">
-            <!--<ion-avatar item-left>
-              <img />
-            </ion-avatar>
-            <h2>
-              Prof: Nome Professor {{mensagem.remetente}}
-            </h2>
+              <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.dataEnvioMensagem></ion-datetime>
           </ion-item>
-          <ion-item-options side="left">
-            <button ion-button color="light"></button>
-          </ion-item-options>
-        </ion-item-sliding>
-        <ion-item id="muralDeMensagens-list-item-container5">
-          <div id="muralDeMensagens-markdown9" style="text-align:justify;" class="show-list-numbers-and-dots">
-            <p style="margin-top:0px;color:#4DA0CF;">
-              Mensagem: 
-              {{mensagem.texto}}
-            </p>
-          </div>
-        </ion-item>
-       <!-- <ion-item id="muralDeMensagens-list-item-container7">
-          <div id="muralDeMensagens-markdown11" style="text-align:justify;" class="show-list-numbers-and-dots">
-            <p style="margin-top:0px;color:#248088;">
-              Data: {{mensagem.data}}
-            </p>
-          </div>
-        </ion-item>
-        <ion-item>
-            <ion-label>Date</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>
-          </ion-item>
-      </ion-list>-->
+     
     </ion-card>
     
   </ion-content>

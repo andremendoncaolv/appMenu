@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 110:
+/***/ 111:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -13,27 +13,27 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 110;
+webpackEmptyAsyncContext.id = 111;
 
 /***/ }),
 
-/***/ 152:
+/***/ 153:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/grupo/grupo.module": [
-		277,
+		281,
 		2
 	],
 	"../pages/login/login.module": [
-		153
+		154
 	],
 	"../pages/notificacao/notificacao.module": [
-		278,
+		282,
 		1
 	],
 	"../pages/perfil/perfil.module": [
-		279,
+		283,
 		0
 	]
 };
@@ -48,12 +48,12 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 152;
+webpackAsyncContext.id = 153;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 153:
+/***/ 154:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61,7 +61,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(155);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -91,7 +91,7 @@ var LoginPageModule = (function () {
 
 /***/ }),
 
-/***/ 154:
+/***/ 155:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,8 +99,8 @@ var LoginPageModule = (function () {
 /* unused harmony export listaRetorno */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_users_users__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_users_users__ = __webpack_require__(79);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -130,17 +130,8 @@ var LoginPage = (function () {
             .then(function (result) {
             _this.usuarioLogado = result;
             if (!isEmpty(_this.usuarioLogado[0])) {
-                console.log("USUARIO LOGADO");
-                console.log(_this.usuarioLogado);
                 _this.consultaUsuarios();
                 _this.consultaMensagem(_this.usuarioLogado[0].id);
-                /*this.navCtrl.push(HomePage);
-                this.userProvider.listarMensagens(this.usuarioLogado[0].id)
-      
-                  .then((result: any) =>{
-                  this.listaMensagens = result;
-                  })
-                  */
                 _this.toast.create({ message: "Usuário logado com sucesso. ", duration: 3000 }).present();
             }
             else {
@@ -150,7 +141,9 @@ var LoginPage = (function () {
             .catch(function (error) {
             _this.toast.create({ message: "Erro ao tentar logar.", duration: 3000 }).present();
         });
-        //Valida se o objeto esta preenchido.
+        /*
+          Valida se o objeto esta preenchido.
+        */
         function isEmpty(obj) {
             for (var prop in obj) {
                 if (obj.hasOwnProperty(prop))
@@ -161,8 +154,6 @@ var LoginPage = (function () {
     };
     LoginPage.prototype.consultaMensagem = function (id) {
         var _this = this;
-        console.log("OBJETO USUARIO");
-        console.log(id);
         this.userProvider.listarMensagens(id)
             .then(function (result) {
             _this.listaMensagens = result;
@@ -174,6 +165,7 @@ var LoginPage = (function () {
                 for (j = 0; j < _this.listaUsuarios.length; j++) {
                     if (_this.listaMensagens[i].remetente == _this.listaUsuarios[j].id) {
                         obj = {
+                            idAluno: _this.usuarioLogado[0].id,
                             tituloMensagem: _this.listaMensagens[i].titulo,
                             textoMensagem: _this.listaMensagens[i].texto,
                             nomeRemetente: _this.listaUsuarios[j].nome,
@@ -184,8 +176,11 @@ var LoginPage = (function () {
                     }
                 }
             }
-            console.log(_this.lista);
             _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */], { listaMensagens: _this.listaMensagens, lista: _this.lista });
+            /*
+             Objeto JavaScript que usamos para armazenar dados no navegador.
+            */
+            localStorage.setItem('listaObjetos', JSON.stringify(_this.lista));
         });
     };
     LoginPage.prototype.consultaUsuarios = function () {
@@ -193,20 +188,11 @@ var LoginPage = (function () {
         this.userProvider.listarUsuarios()
             .then(function (result) {
             _this.listaUsuarios = result;
-            console.log("LISTA DE USUARIOS");
-            console.log(_this.listaUsuarios);
-            //this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens});
         });
-    };
-    LoginPage.prototype.goToMuralDeMensagens = function (params) {
-        '';
-        if (!params)
-            params = {};
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/'<ion-content padding style="background:url(assets/img/5iCndnD2SVKQ1M71ASut_site-header-brand.png) no-repeat center;background-size:cover;" id="page1">\n  <div class="spacer" style="width:300px;height:47px;" id="login-spacer2"></div>\n  <img src="assets/img/UmvrjHaDTx72zuTjGSaY_unnamed.png" style="display:block;width:50%;height:auto;margin-left:auto;margin-right:auto;" />\n  <div class="spacer" style="width:300px;height:27px;" id="login-spacer1"></div>\n  <form id="login-form1">\n    <ion-item id="login-input2">\n      <ion-label></ion-label>\n      <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>\n    </ion-item>\n    <ion-item id="login-input3">\n      <ion-label></ion-label>\n      <ion-input type="password" placeholder="Senha" name="senha" [(ngModel)]="senha"></ion-input>\n    </ion-item>\n    <div class="spacer" style="width:300px;height:27px;" id="login-spacer3"></div>\n    <button id="login-button1" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="login()">\n      Login\n    </button>\n    <!--<button id="login-button7" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="goToEsqueciASenha()">\n      Esqueci a Senha\n    </button>-->\n  </form>\n</ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/'<ion-content padding style="background:url(assets/img/5iCndnD2SVKQ1M71ASut_site-header-brand.png) no-repeat center;background-size:cover;" id="page1">\n  <div class="spacer" style="width:300px;height:47px;" id="login-spacer2"></div>\n  <img src="assets/img/UmvrjHaDTx72zuTjGSaY_unnamed.png" style="display:block;width:50%;height:auto;margin-left:auto;margin-right:auto;" />\n  <div class="spacer" style="width:300px;height:27px;" id="login-spacer1"></div>\n  <form id="login-form1">\n    <ion-item id="login-input2">\n      <ion-label></ion-label>\n      <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>\n    </ion-item>\n    <ion-item id="login-input3">\n      <ion-label></ion-label>\n      <ion-input type="password" placeholder="Senha" name="senha" [(ngModel)]="senha"></ion-input>\n    </ion-item>\n    <div class="spacer" style="width:300px;height:27px;" id="login-spacer3"></div>\n    <button id="login-button1" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="login()">\n      Login\n    </button>\n  </form>\n</ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */]])
@@ -224,112 +210,14 @@ var listaRetorno = (function () {
 
 /***/ }),
 
-/***/ 155:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var UsersProvider = (function () {
-    function UsersProvider(http) {
-        this.http = http;
-        this.API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/?email=";
-        this.API_REST_MENSAGEM = "http://renatoln.pythonanywhere.com/mensagens/?destinatario=";
-        this.API_REST_USUARIOS = "http://renatoln.pythonanywhere.com/usuarios/";
-    }
-    // MÉTODO PARA CONSULTAR LOGIN
-    UsersProvider.prototype.login = function (email, senha) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            if (email != null && senha != null) {
-                var data = {
-                    email: email,
-                    senha: senha
-                };
-            }
-            else {
-                (function (error) {
-                    reject(error);
-                });
-            }
-            _this.http.get(_this.API_REST_LOGIN + data.email + '&senha=', data.senha)
-                .subscribe(function (result) {
-                resolve(result.json());
-            }),
-                function (error) {
-                    reject(error);
-                };
-        });
-    };
-    UsersProvider.prototype.listarMensagens = function (id) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            if (id != null) {
-                var objeto = {
-                    id: id
-                };
-            }
-            else {
-                (function (error) {
-                    reject(error);
-                });
-            }
-            _this.http.get(_this.API_REST_MENSAGEM + objeto.id)
-                .subscribe(function (result) {
-                resolve(result.json());
-            }),
-                function (error) {
-                    reject(error);
-                };
-        });
-    };
-    UsersProvider.prototype.listarUsuarios = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.http.get(_this.API_REST_USUARIOS)
-                .subscribe(function (result) {
-                resolve(result.json());
-            }),
-                function (error) {
-                    reject(error);
-                    console.log("lista usuario");
-                    console.log("result");
-                };
-        });
-    };
-    UsersProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]])
-    ], UsersProvider);
-    return UsersProvider;
-}());
-
-//# sourceMappingURL=users.js.map
-
-/***/ }),
-
 /***/ 200:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DisciplinasPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_users_users__ = __webpack_require__(79);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -341,42 +229,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var ListPage = (function () {
-    function ListPage(navCtrl, navParams) {
+
+var DisciplinasPage = (function () {
+    function DisciplinasPage(navCtrl, navParams, userProvider) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        // If we navigated to this page, we will have an item available as a nav param
-        this.selectedItem = navParams.get('item');
-        // Let's populate this page with some filler content for funzies
-        this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-            'american-football', 'boat', 'bluetooth', 'build'];
-        this.items = [];
-        for (var i = 1; i < 11; i++) {
-            this.items.push({
-                title: 'Item ' + i,
-                note: 'This is item #' + i,
-                icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-            });
-        }
+        this.userProvider = userProvider;
+        this.lista = new Array();
+        this.listaDisciplinas = new Array();
+        this.lista = JSON.parse(localStorage.getItem('listaObjetos'));
+        //console.log("Lista disciplinas");
+        this.consultasDisciplinas(this.lista[0].idAluno);
+        //console.log(this.lista);
+        // this.consultasDisciplinas(this.lista[0].idAluno);
     }
-    ListPage_1 = ListPage;
-    ListPage.prototype.itemTapped = function (event, item) {
-        // That's right, we're pushing to ourselves!
-        this.navCtrl.push(ListPage_1, {
-            item: item
+    /*
+      MÉTODO PARA CONSULTAR DISCIPLINAS
+    */
+    DisciplinasPage.prototype.consultasDisciplinas = function (id) {
+        var _this = this;
+        this.userProvider.listarDisciplinas(id)
+            .then(function (result) {
+            _this.listaDisciplinas = result;
+            console.log("Lista disciplinas");
+            console.log(_this.listaDisciplinas);
         });
     };
-    ListPage = ListPage_1 = __decorate([
+    DisciplinasPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-list',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/list/list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-end>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n  <div *ngIf="selectedItem" padding>\n    You navigated here from <b>{{selectedItem.title}}</b>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/list/list.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/disciplinas/disciplinas.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Disciplinas</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding id="page2" style="background-color:#FFFFFF;">\n\n  <ion-card id="muralDeDisciplinas" *ngFor="let disciplina of listaDisciplinas">\n      <ion-card-header>\n          Disciplina: {{disciplina.disciplina.nome}}\n        </ion-card-header>\n        <ion-card-content>\n            Código: {{disciplina.disciplina.codigo}}\n        </ion-card-content>     \n    \n  </ion-card>\n  \n</ion-content>\n'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/disciplinas/disciplinas.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
-    ], ListPage);
-    return ListPage;
-    var ListPage_1;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_users_users__["a" /* UsersProvider */]])
+    ], DisciplinasPage);
+    return DisciplinasPage;
 }());
 
-//# sourceMappingURL=list.js.map
+//# sourceMappingURL=disciplinas.js.map
 
 /***/ }),
 
@@ -403,19 +291,21 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_disciplinas_disciplinas__ = __webpack_require__(200);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login_module__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_users_users__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login_module__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_users_users__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_storage__ = __webpack_require__(277);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -435,7 +325,7 @@ var AppModule = (function () {
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_5__pages_list_list__["a" /* ListPage */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_disciplinas_disciplinas__["a" /* DisciplinasPage */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -448,13 +338,14 @@ var AppModule = (function () {
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_8__pages_login_login_module__["LoginPageModule"],
-                __WEBPACK_IMPORTED_MODULE_10__angular_http__["b" /* HttpModule */]
+                __WEBPACK_IMPORTED_MODULE_10__angular_http__["b" /* HttpModule */],
+                __WEBPACK_IMPORTED_MODULE_11__ionic_storage__["a" /* IonicStorageModule */].forRoot()
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_5__pages_list_list__["a" /* ListPage */]
+                __WEBPACK_IMPORTED_MODULE_5__pages_disciplinas_disciplinas__["a" /* DisciplinasPage */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__["a" /* StatusBar */],
@@ -480,9 +371,9 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_disciplinas_disciplinas__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(155);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -509,7 +400,7 @@ var MyApp = (function () {
         // used for an example of ngFor and navigation
         this.pages = [
             { title: 'Home', component: __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */] },
-            { title: 'List', component: __WEBPACK_IMPORTED_MODULE_5__pages_list_list__["a" /* ListPage */] },
+            { title: 'Disciplinas', component: __WEBPACK_IMPORTED_MODULE_5__pages_disciplinas_disciplinas__["a" /* DisciplinasPage */] },
         ];
     }
     MyApp.prototype.initializeApp = function () {
@@ -542,7 +433,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 77:
+/***/ 78:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -566,13 +457,13 @@ var HomePage = (function () {
         this.navParams = navParams;
         this.lista_mensagens = new Array();
         this.lista = new Array();
-        //this.lista_mensagens = this.navParams.get('listaMensagens');
-        this.lista = this.navParams.get('lista');
-        console.log(this.lista);
+        this.lista = JSON.parse(localStorage.getItem('listaObjetos'));
+        //console.log("LISTA HOME");
+        //console.log(this.lista);
     }
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/'<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n        Mural de Mensagens\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n  <ion-content padding id="page2" style="background-color:#FFFFFF;">\n    <<!--form id="muralDeMensagens-form5">\n      <div class="spacer" style="width:300px;height:12px;" id="muralDeMensagens-spacer9"></div>\n      <ion-searchbar placeholder="Buscar recados" name="" id="muralDeMensagens-search2"></ion-searchbar>\n    </form>-->\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n    <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista">\n        <ion-card-header>\n            {{mensagem.tituloMensagem}}\n          </ion-card-header>\n          <ion-card-content>\n              Mensagem: \n              {{mensagem.textoMensagem}}\n          </ion-card-content>    \n          <ion-item>\n              Prof: Nome Professor {{mensagem.nomeRemetente}}\n          </ion-item>  \n          <ion-item>\n              <ion-label>Data</ion-label>\n              <!--<ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.dataMensagem></ion-datetime>-->\n            </ion-item>\n      <!--<ion-list>\n        <ion-item-sliding>\n          <ion-item color="calm" id="muralDeMensagens-list-item16">\n            <!--<ion-avatar item-left>\n              <img />\n            </ion-avatar>\n            <h2>\n              Prof: Nome Professor {{mensagem.remetente}}\n            </h2>\n          </ion-item>\n          <ion-item-options side="left">\n            <button ion-button color="light"></button>\n          </ion-item-options>\n        </ion-item-sliding>\n        <ion-item id="muralDeMensagens-list-item-container5">\n          <div id="muralDeMensagens-markdown9" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#4DA0CF;">\n              Mensagem: \n              {{mensagem.texto}}\n            </p>\n          </div>\n        </ion-item>\n       <!-- <ion-item id="muralDeMensagens-list-item-container7">\n          <div id="muralDeMensagens-markdown11" style="text-align:justify;" class="show-list-numbers-and-dots">\n            <p style="margin-top:0px;color:#248088;">\n              Data: {{mensagem.data}}\n            </p>\n          </div>\n        </ion-item>\n        <ion-item>\n            <ion-label>Date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>\n          </ion-item>\n      </ion-list>-->\n    </ion-card>\n    \n  </ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/'<ion-header>\n    <!--<ion-navbar>-->\n   <ion-toolbar primary> \n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n        Mural de Mensagens\n      </ion-title>\n    <!--</ion-navbar>-->\n    </ion-toolbar>\n  </ion-header>\n  <ion-content padding id="page2" style="background-color:#FFFFFF;">\n   \n    <!--<button ion-button secondary menuToggle>Menu</button>-->\n    <ion-card id="muralDeMensagens-card21" *ngFor="let mensagem of lista">\n        <ion-card-header>\n            Prof:{{mensagem.nomeRemetente}}\n          </ion-card-header>\n          <ion-card-content>\n              Mensagem: \n              {{mensagem.textoMensagem}}\n          </ion-card-content>\n          <ion-item>\n              <ion-label>Data</ion-label>\n              <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.dataEnvioMensagem></ion-datetime>\n          </ion-item>\n     \n    </ion-card>\n    \n  </ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], HomePage);
@@ -580,6 +471,130 @@ var HomePage = (function () {
 }());
 
 //# sourceMappingURL=home.js.map
+
+/***/ }),
+
+/***/ 79:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var UsersProvider = (function () {
+    function UsersProvider(http) {
+        this.http = http;
+        /*
+         VARIÁVEIS DE ENDEREÇOS DOS SERVIÇOS
+       */
+        this.API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/?email=";
+        this.API_REST_MENSAGEM = "http://renatoln.pythonanywhere.com/mensagens/?destinatario=";
+        this.API_REST_USUARIOS = "http://renatoln.pythonanywhere.com/usuarios/";
+        this.API_REST_DISCIPLINAS_USUARIOS = "http://renatoln.pythonanywhere.com/disciplina_alunoss/?estudante=";
+    }
+    /*
+      MÉTODO PARA CONSULTAR LOGIN
+    */
+    UsersProvider.prototype.login = function (email, senha) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (email != null && senha != null) {
+                var data = {
+                    email: email,
+                    senha: senha
+                };
+            }
+            else {
+                (function (error) {
+                    reject(error);
+                });
+            }
+            _this.http.get(_this.API_REST_LOGIN + data.email + '&senha=', data.senha)
+                .subscribe(function (result) {
+                resolve(result.json());
+            }),
+                function (error) {
+                    reject(error);
+                };
+        });
+    };
+    /*
+    MÉTODO PARA LISTAR MENSAGENS
+  */
+    UsersProvider.prototype.listarMensagens = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (id != null) {
+                var objeto = {
+                    id: id
+                };
+            }
+            else {
+                (function (error) {
+                    reject(error);
+                });
+            }
+            _this.http.get(_this.API_REST_MENSAGEM + objeto.id)
+                .subscribe(function (result) {
+                resolve(result.json());
+            }),
+                function (error) {
+                    reject(error);
+                };
+        });
+    };
+    /*
+      MÉTODO PARA LISTAR USUARIOS
+    */
+    UsersProvider.prototype.listarUsuarios = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.http.get(_this.API_REST_USUARIOS)
+                .subscribe(function (result) {
+                resolve(result.json());
+            }),
+                function (error) {
+                    reject(error);
+                };
+        });
+    };
+    /*
+      MÉTODO PARA LISTAR DISCIPLINAS
+    */
+    UsersProvider.prototype.listarDisciplinas = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.http.get(_this.API_REST_DISCIPLINAS_USUARIOS + id)
+                .subscribe(function (result) {
+                resolve(result.json());
+            }),
+                function (error) {
+                    reject(error);
+                };
+        });
+    };
+    UsersProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]])
+    ], UsersProvider);
+    return UsersProvider;
+}());
+
+//# sourceMappingURL=users.js.map
 
 /***/ })
 

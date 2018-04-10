@@ -11,9 +11,9 @@ export class HomePage {
   public lista = new Array<any>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    //this.lista_mensagens = this.navParams.get('listaMensagens');
-    this.lista = this.navParams.get('lista');
-    console.log(this.lista);
+    this.lista = JSON.parse(localStorage.getItem('listaObjetos'));
+    //console.log("LISTA HOME");
+    //console.log(this.lista);
   }
 
 }

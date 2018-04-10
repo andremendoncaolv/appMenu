@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { UsersProvider } from '../../providers/users/users';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -28,17 +29,9 @@ export class LoginPage {
         .then((result: any) => {
           this.usuarioLogado = result;
         if(!isEmpty(this.usuarioLogado[0])){    
-          console.log("USUARIO LOGADO")
-          console.log(this.usuarioLogado);
           this.consultaUsuarios();
           this.consultaMensagem(this.usuarioLogado[0].id) ;      
-          /*this.navCtrl.push(HomePage);
-          this.userProvider.listarMensagens(this.usuarioLogado[0].id)
-
-            .then((result: any) =>{
-            this.listaMensagens = result;
-            })
-            */
+         
           this.toast.create({message: "Usuário logado com sucesso. ", duration: 3000}).present();
         }else{
           this.toast.create({message: "Erro ao tentar logar.", duration: 3000}).present();
@@ -48,7 +41,9 @@ export class LoginPage {
         this.toast.create({message: "Erro ao tentar logar.", duration: 3000}).present();
       })
 
-      //Valida se o objeto esta preenchido.
+      /*
+        Valida se o objeto esta preenchido.
+      */
       function isEmpty(obj) {
         for(var prop in obj) {
             if(obj.hasOwnProperty(prop))
@@ -59,8 +54,6 @@ export class LoginPage {
     }
   }
   consultaMensagem(id: number){
-    console.log("OBJETO USUARIO");
-    console.log(id);
     this.userProvider.listarMensagens(id)
       .then((result: any) =>{
         this.listaMensagens = result;
@@ -73,6 +66,7 @@ export class LoginPage {
           for(j=0; j < this.listaUsuarios.length; j++){
             if (this.listaMensagens[i].remetente == this.listaUsuarios[j].id){
               obj = {
+                idAluno: this.usuarioLogado[0].id,
                 tituloMensagem: this.listaMensagens[i].titulo,
                 textoMensagem: this.listaMensagens[i].texto,
                 nomeRemetente: this.listaUsuarios[j].nome,
@@ -83,8 +77,11 @@ export class LoginPage {
             }
           }
          }
-         console.log(this.lista);        
         this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens, lista: this.lista});
+         /*
+          Objeto JavaScript que usamos para armazenar dados no navegador.
+         */
+         localStorage.setItem('listaObjetos',JSON.stringify(this.lista));
     })
   }
 
@@ -92,28 +89,13 @@ export class LoginPage {
     this.userProvider.listarUsuarios()
     .then((result: any) =>{
       this.listaUsuarios = result;
-      console.log("LISTA DE USUARIOS");
-      console.log(this.listaUsuarios);
-      //this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens});
   })
   }
- 
-  goToMuralDeMensagens(params){''
-    if (!params) params = {};
-    this.navCtrl.push(HomePage);
-  }
-  
-  /*goToEsqueciASenha(params){
-    console.log("goToEsqueciASenha");
-    if (!params) params = {};
-    //this.navCtrl.push(HomePage);
-  }
-  */
   
   
 }
 export class listaRetorno{
-  id: string // usuario
+  idAluno: string // usuario
   email: string; //usuario
   senha: string; //usuario
   nomeRemetente: string; //lista de usuarios
