@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { DisciplinasPage } from '../pages/disciplinas/disciplinas';
 import { LoginPage } from '../pages/login/login';
+import { EnvioPage } from '../pages/envio/envio'
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +24,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Disciplinas', component: DisciplinasPage },    
+      { title: 'Disciplinas', component: DisciplinasPage }, 
+      { title: 'Envio', component: EnvioPage},
     
     ];
 

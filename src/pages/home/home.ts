@@ -9,12 +9,21 @@ export class HomePage {
 
   public lista_mensagens = new Array<any>();
   public lista = new Array<any>();
+  public muralDeMensagens_card21 = false;
+  public muralDeMensagens_card22 = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.lista = JSON.parse(localStorage.getItem('listaObjetos'));
-    //console.log("LISTA HOME");
-    //console.log(this.lista);
+    this.muralDeMensagens_card21 = JSON.parse(localStorage.getItem('flagHtml'));
+
+    if(this.muralDeMensagens_card21 != false){
+      this.muralDeMensagens_card22 = false;
+    }else{
+      this.muralDeMensagens_card22 = true;
+    }
+    
   }
+  
 
 }
 

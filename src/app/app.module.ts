@@ -12,12 +12,14 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { UsersProvider } from '../providers/users/users';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { EnvioPage } from '../pages/envio/envio';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     DisciplinasPage,
+    EnvioPage,
   
   ],
   imports: [
@@ -32,7 +34,8 @@ import { IonicStorageModule } from '@ionic/storage';
   entryComponents: [
     MyApp,
     HomePage,
-    DisciplinasPage
+    DisciplinasPage,
+    EnvioPage    
   ],
   providers: [
     StatusBar,

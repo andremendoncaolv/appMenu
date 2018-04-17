@@ -18,6 +18,8 @@ export class LoginPage {
   private listaMensagens = new Array<any>();
   private listaUsuarios = new Array<any>();
   private lista = new Array<any>();
+  private muralDeMensagens_card21 = false;
+  private muralDeMensagens_card22 = false;
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
@@ -28,10 +30,14 @@ export class LoginPage {
     this.userProvider.login(this.email, this.senha)
         .then((result: any) => {
           this.usuarioLogado = result;
-        if(!isEmpty(this.usuarioLogado[0])){    
-          this.consultaUsuarios();
-          this.consultaMensagem(this.usuarioLogado[0].id) ;      
-         
+        if(!isEmpty(this.usuarioLogado[0])){ 
+          if(this.usuarioLogado[0].tipo == 1){// Usuário tipo 1 = professor
+            localStorage.setItem('remetente',JSON.stringify(this.usuarioLogado[0]));
+            this.consultaMensagemEnviada(this.usuarioLogado[0].id);
+          }else{   
+            this.consultaUsuarios();
+            this.consultaMensagem(this.usuarioLogado[0].id) ;      
+          }
           this.toast.create({message: "Usuário logado com sucesso. ", duration: 3000}).present();
         }else{
           this.toast.create({message: "Erro ao tentar logar.", duration: 3000}).present();
@@ -77,11 +83,15 @@ export class LoginPage {
             }
           }
          }
-        this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens, lista: this.lista});
+        this.muralDeMensagens_card21 = false; 
+        this.muralDeMensagens_card22 = true
+        this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens, lista: this.lista,
+           muralDeMensagens_card21: this.muralDeMensagens_card21, muralDeMensagens_card22: this.muralDeMensagens_card22});
          /*
           Objeto JavaScript que usamos para armazenar dados no navegador.
          */
          localStorage.setItem('listaObjetos',JSON.stringify(this.lista));
+         localStorage.setItem('flagHtml', JSON.stringify(this.muralDeMensagens_card21));
     })
   }
 
@@ -90,6 +100,19 @@ export class LoginPage {
     .then((result: any) =>{
       this.listaUsuarios = result;
   })
+  }
+
+  consultaMensagemEnviada(id: number){
+    this.userProvider.listarMensagensEnviadas(id)
+      .then((result: any) =>{
+        this.listaMensagens = result;
+        this.muralDeMensagens_card21 = true; 
+        this.muralDeMensagens_card22 = false;
+        this.navCtrl.push(HomePage, {listaMensagens: this.listaMensagens, 
+            muralDeMensagens_card21: this.muralDeMensagens_card21, muralDeMensagens_card22: this.muralDeMensagens_card22});
+        localStorage.setItem('listaObjetos',JSON.stringify(this.listaMensagens));
+        localStorage.setItem('flagHtml', JSON.stringify(this.muralDeMensagens_card21));
+      });
   }
   
   

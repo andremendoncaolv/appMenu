@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import { DateTime } from 'ionic-angular';
 
 @Injectable()
 export class UsersProvider {
@@ -10,8 +11,10 @@ export class UsersProvider {
   */ 
   private API_REST_LOGIN = "http://renatoln.pythonanywhere.com/usuarios/?email=";
   private API_REST_MENSAGEM = "http://renatoln.pythonanywhere.com/mensagens/?destinatario=";
+  private API_REST_MENSAGEM_ENVIADA = "http://renatoln.pythonanywhere.com/mensagens/?remetente=";
   private API_REST_USUARIOS = "http://renatoln.pythonanywhere.com/usuarios/";
   private API_REST_DISCIPLINAS_USUARIOS = "http://renatoln.pythonanywhere.com/disciplina_alunoss/?estudante=";
+  private API_REST_ENVIAR_MENSAGEM = "http://renatoln.pythonanywhere.com/mensagens/";
 
   constructor(public http : Http){
    } 
@@ -65,6 +68,31 @@ export class UsersProvider {
     });
    }
 
+ /*
+    MÉTODO PARA LISTAR MENSAGENS ENVIADAS 
+  */ 
+ listarMensagensEnviadas(id: number){
+  return new Promise((resolve, reject) =>{
+    if(id != null){
+    var objeto ={
+      id: id
+    };
+  }else{
+    (error) => {
+      reject(error);
+    }
+  }      
+    this.http.get(this.API_REST_MENSAGEM_ENVIADA + objeto.id)
+    .subscribe((result: any) => {
+      resolve(result.json())
+    }),
+    (error) => {
+      reject(error);
+    }
+  });
+ }
+
+
   /*
     MÉTODO PARA LISTAR USUARIOS
   */ 
@@ -94,5 +122,24 @@ export class UsersProvider {
       }
     });
      
+   }
+
+   enviarMensagem(titulo: string, texto: string, destinatario: number, remetente: number){
+    return new Promise((resolve, reject) =>{
+      var data = {
+        data : new Date,
+        titulo : titulo, 
+        texto : texto,
+        remetente : remetente,
+        destinatario : destinatario
+      }
+      this.http.post(this.API_REST_ENVIAR_MENSAGEM + 'content-type: application/json', data)
+      .subscribe((result: any) => {
+        resolve(result.json());
+      },
+      (error) => {
+        reject(error.json());
+      });
+    })
    }
 }
