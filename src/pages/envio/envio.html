@@ -27,11 +27,11 @@
             <ion-label>Destinatario:</ion-label> 
           </ion-item>
           <ion-item id="destinatorioMensagem2">
-            <ion-input type="destinatario" placeholder="Destinatario" name="destinatario" [(ngModel)]="destinatario"></ion-input>
+            <ion-input type="destinatarios" placeholder="Destinatario" name="destinatarios" [(ngModel)]="destinatarios"></ion-input>
          </ion-item>
       </ion-card-header>    
     
   </ion-card>
-  <button id="envio-button1" ion-button color="calm">Enviar</button>
+  <button id="envio-button1" ion-button color="calm" on-click="enviarMensagem()">Enviar</button>
   
 </ion-content>

@@ -33,6 +33,7 @@ export class LoginPage {
         if(!isEmpty(this.usuarioLogado[0])){ 
           if(this.usuarioLogado[0].tipo == 1){// Usuário tipo 1 = professor
             localStorage.setItem('remetente',JSON.stringify(this.usuarioLogado[0]));
+            localStorage.setItem('idRemetente', JSON.stringify(this.usuarioLogado[0].id));
             this.consultaMensagemEnviada(this.usuarioLogado[0].id);
           }else{   
             this.consultaUsuarios();

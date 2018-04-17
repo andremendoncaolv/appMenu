@@ -5,7 +5,6 @@ webpackJsonp([3],{
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EnvioPage; });
-/* unused harmony export listaMensagemEnvio */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_users_users__ = __webpack_require__(46);
@@ -33,32 +32,49 @@ var EnvioPage = (function () {
         this.navParams = navParams;
         this.toast = toast;
         this.userProvider = userProvider;
+        this.destinatario = new Array();
+        this.remetente = new Array();
         this.mensagemEnviada = new Array();
         this.testeRemetente = new Array();
-        this.testeRemetente = JSON.parse(localStorage.getItem("remetente"));
-        console.log(this.testeRemetente);
+        this.remetente = JSON.parse(localStorage.getItem("remetente"));
+        this.idRemetente = JSON.parse(localStorage.getItem("idRemetente"));
+        console.log(this.idRemetente);
     }
     EnvioPage.prototype.enviarMensagem = function () {
         var _this = this;
-        this.userProvider.enviarMensagem(this.tituloEnvio, this.textoEnvio, this.destinatarioEnvio, this.remetente)
+        this.destinatario.push(parseInt(this.destinatarios));
+        this.userProvider.enviarMensagem(this.titulo, this.mensagem, this.destinatario, this.idRemetente)
             .then(function (result) {
             _this.mensagemEnviada = result;
+            if (!isEmpty(_this.mensagemEnviada)) {
+                _this.toast.create({ message: "Mensagem enviada com sucesso. ", duration: 3000 }).present();
+            }
+            else {
+                _this.toast.create({ message: "Erro ao tentar enviar mensagem.", duration: 3000 }).present();
+            }
+        })
+            .catch(function (error) {
+            _this.toast.create({ message: "Erro ao tentar enviar mensagem.", duration: 3000 }).present();
         });
+        /*
+          Valida se o objeto esta preenchido.
+        */
+        function isEmpty(obj) {
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop))
+                    return false;
+            }
+            return true;
+        }
     };
     EnvioPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-envio',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/envio/envio.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Envio de Mensagem </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding id="page2" style="background-color:#FFFFFF;">\n\n  <ion-card id="muralEnvioMensagem">\n      <ion-card-header>\n          <ion-item id="tituloEnvioMensagem">\n              <ion-label>Titulo: </ion-label>\n          </ion-item> \n          <ion-item id="tituloEnvioMensagem">\n              <ion-input type="titulo" placeholder="Titulo" name="titulo" [(ngModel)]="titulo"></ion-input>\n          </ion-item>\n          <ion-item id="textoEnvioMensagem">\n            <ion-label>Mensagem:</ion-label> \n          </ion-item>\n          <ion-item id="textoEnvioMensagem2">\n            <ion-input type="mensagem" placeholder="Mensagem" name="mensagem" [(ngModel)]="mensagem"></ion-input>\n         </ion-item>\n         <ion-item id="destinatorioEnvioMensagem">\n            <ion-label>Destinatario:</ion-label> \n          </ion-item>\n          <ion-item id="destinatorioMensagem2">\n            <ion-input type="destinatario" placeholder="Destinatario" name="destinatario" [(ngModel)]="destinatario"></ion-input>\n         </ion-item>\n      </ion-card-header>    \n    \n  </ion-card>\n  <button id="envio-button1" ion-button color="calm">Enviar</button>\n  \n</ion-content>\n'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/envio/envio.html"*/,
+            selector: 'page-envio',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/envio/envio.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Envio de Mensagem </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding id="page2" style="background-color:#FFFFFF;">\n\n  <ion-card id="muralEnvioMensagem">\n      <ion-card-header>\n          <ion-item id="tituloEnvioMensagem">\n              <ion-label>Titulo: </ion-label>\n          </ion-item> \n          <ion-item id="tituloEnvioMensagem">\n              <ion-input type="titulo" placeholder="Titulo" name="titulo" [(ngModel)]="titulo"></ion-input>\n          </ion-item>\n          <ion-item id="textoEnvioMensagem">\n            <ion-label>Mensagem:</ion-label> \n          </ion-item>\n          <ion-item id="textoEnvioMensagem2">\n            <ion-input type="mensagem" placeholder="Mensagem" name="mensagem" [(ngModel)]="mensagem"></ion-input>\n         </ion-item>\n         <ion-item id="destinatorioEnvioMensagem">\n            <ion-label>Destinatario:</ion-label> \n          </ion-item>\n          <ion-item id="destinatorioMensagem2">\n            <ion-input type="destinatarios" placeholder="Destinatario" name="destinatarios" [(ngModel)]="destinatarios"></ion-input>\n         </ion-item>\n      </ion-card-header>    \n    \n  </ion-card>\n  <button id="envio-button1" ion-button color="calm" on-click="enviarMensagem()">Enviar</button>\n  \n</ion-content>\n'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/envio/envio.html"*/,
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_users_users__["a" /* UsersProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_users_users__["a" /* UsersProvider */]) === "function" && _d || Object])
     ], EnvioPage);
     return EnvioPage;
     var _a, _b, _c, _d;
-}());
-
-var listaMensagemEnvio = (function () {
-    function listaMensagemEnvio() {
-    }
-    return listaMensagemEnvio;
 }());
 
 //# sourceMappingURL=envio.js.map
@@ -199,6 +215,7 @@ var LoginPage = (function () {
             if (!isEmpty(_this.usuarioLogado[0])) {
                 if (_this.usuarioLogado[0].tipo == 1) {
                     localStorage.setItem('remetente', JSON.stringify(_this.usuarioLogado[0]));
+                    localStorage.setItem('idRemetente', JSON.stringify(_this.usuarioLogado[0].id));
                     _this.consultaMensagemEnviada(_this.usuarioLogado[0].id);
                 }
                 else {
@@ -284,10 +301,10 @@ var LoginPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-login',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/'<ion-content padding style="background:url(assets/img/5iCndnD2SVKQ1M71ASut_site-header-brand.png) no-repeat center;background-size:cover;" id="page1">\n  <div class="spacer" style="width:300px;height:47px;" id="login-spacer2"></div>\n  <img src="assets/img/UmvrjHaDTx72zuTjGSaY_unnamed.png" style="display:block;width:50%;height:auto;margin-left:auto;margin-right:auto;" />\n  <div class="spacer" style="width:300px;height:27px;" id="login-spacer1"></div>\n  <form id="login-form1">\n    <ion-item id="login-input2">\n      <ion-label></ion-label>\n      <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>\n    </ion-item>\n    <ion-item id="login-input3">\n      <ion-label></ion-label>\n      <ion-input type="password" placeholder="Senha" name="senha" [(ngModel)]="senha"></ion-input>\n    </ion-item>\n    <div class="spacer" style="width:300px;height:27px;" id="login-spacer3"></div>\n    <button id="login-button1" ion-button color="calm" block style="font-weight:300;border-radius:25px 25px 25px 25px;" on-click="login()">\n      Login\n    </button>\n  </form>\n</ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/login/login.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */]])
     ], LoginPage);
     return LoginPage;
-    var _a, _b, _c, _d;
 }());
 
 var listaRetorno = (function () {
@@ -431,7 +448,7 @@ var AppModule = (function () {
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_8__pages_login_login_module__["LoginPageModule"],
-                __WEBPACK_IMPORTED_MODULE_10__angular_http__["b" /* HttpModule */],
+                __WEBPACK_IMPORTED_MODULE_10__angular_http__["c" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_11__ionic_storage__["a" /* IonicStorageModule */].forRoot()
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
@@ -673,14 +690,18 @@ var UsersProvider = (function () {
     UsersProvider.prototype.enviarMensagem = function (titulo, texto, destinatario, remetente) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            var data = {
+            // Colocando informação no header da requisição usando o metodo post
+            var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]();
+            headers.append('Content-Type', 'application/json');
+            var header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: headers });
+            var obj = {
                 data: new Date,
                 titulo: titulo,
                 texto: texto,
                 remetente: remetente,
                 destinatario: destinatario
             };
-            _this.http.post(_this.API_REST_ENVIAR_MENSAGEM + 'content-type: application/json', data)
+            _this.http.post(_this.API_REST_ENVIAR_MENSAGEM, obj, header)
                 .subscribe(function (result) {
                 resolve(result.json());
             }, function (error) {
@@ -690,10 +711,9 @@ var UsersProvider = (function () {
     };
     UsersProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Http */]) === "function" && _a || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */]])
     ], UsersProvider);
     return UsersProvider;
-    var _a;
 }());
 
 //# sourceMappingURL=users.js.map
@@ -739,10 +759,9 @@ var HomePage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/'<ion-header>\n    <!--<ion-navbar>-->\n   <ion-toolbar primary> \n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>\n        Mural de Mensagens\n      </ion-title>\n    <!--</ion-navbar>-->\n    </ion-toolbar>\n  </ion-header>\n  <ion-content padding id="page2" style="background-color:#FFFFFF;">\n   \n    <!--<button ion-button secondary menuToggle>Menu</button>-->\n    <ion-card id="muralDeMensagens_card21" [hidden]=muralDeMensagens_card21 *ngFor="let mensagem of lista">\n        <ion-card-header>\n            Prof:{{mensagem.nomeRemetente}}\n          </ion-card-header>\n          <ion-card-content>\n              Mensagem: \n              {{mensagem.textoMensagem}}\n          </ion-card-content>\n          <ion-item>\n              <ion-label>Data</ion-label>\n              <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.dataEnvioMensagem></ion-datetime>\n          </ion-item>\n     \n    </ion-card>\n\n    <ion-card id="muralDeMensagens_card22" [hidden]=muralDeMensagens_card22 *ngFor="let mensagem of lista">\n        <ion-card-header>\n            Titulo: {{mensagem.titulo}}\n          </ion-card-header>\n          <ion-card-content>\n              Mensagem Enviada:  \n              {{mensagem.texto}}\n          </ion-card-content>\n          <ion-item>\n              <ion-label>Data</ion-label>\n              <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]=mensagem.data></ion-datetime>\n          </ion-item>\n     \n    </ion-card>\n    \n  </ion-content>'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], HomePage);
     return HomePage;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=home.js.map

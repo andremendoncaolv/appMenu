@@ -124,16 +124,21 @@ export class UsersProvider {
      
    }
 
-   enviarMensagem(titulo: string, texto: string, destinatario: number, remetente: number){
+   enviarMensagem(titulo: string, texto: string, destinatario: Array<number>, remetente: number){
     return new Promise((resolve, reject) =>{
-      var data = {
+      // Colocando informação no header da requisição usando o metodo post
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      let header = new RequestOptions({headers : headers});
+
+      var obj = {
         data : new Date,
         titulo : titulo, 
         texto : texto,
         remetente : remetente,
         destinatario : destinatario
       }
-      this.http.post(this.API_REST_ENVIAR_MENSAGEM + 'content-type: application/json', data)
+      this.http.post(this.API_REST_ENVIAR_MENSAGEM, obj, header)
       .subscribe((result: any) => {
         resolve(result.json());
       },
