@@ -15,11 +15,14 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.lista = JSON.parse(localStorage.getItem('listaObjetos'));
     this.muralDeMensagens_card21 = JSON.parse(localStorage.getItem('flagHtml'));
+    var id;
 
     if(this.muralDeMensagens_card21 != false){
       this.muralDeMensagens_card22 = false;
+      id = document.getElementById('Envio');
+      id.hidden = false;
     }else{
-      var id = document.getElementById('Envio');
+      id = document.getElementById('Envio');
       id.hidden = true;
       this.muralDeMensagens_card22 = true;
     }

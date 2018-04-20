@@ -8,25 +8,28 @@
 </ion-header>
 
 <ion-content padding id="page2" style="background-color:#FFFFFF;">
-
-  <ion-card id="muralDeDisciplinas1" [hidden]=muralDeDisciplinas1 *ngFor="let disciplina of listaDisciplinas">
+  <div *ngIf="muralDeDisciplinas1">
+    <!-- <ion-card id="muralDeDisciplinas1" [hidden]=muralDeDisciplinas1 *ngFor="let disciplina of listaDisciplinas"> -->
+        <ion-card id="muralDeDisciplinas1" *ngFor="let disciplina of listaDisciplinas">
+        <ion-card-header>
+            Disciplina: {{disciplina.disciplina.nome}}
+          </ion-card-header>
+          <ion-card-content>
+              Código: {{disciplina.disciplina.codigo}}
+          </ion-card-content>     
+      
+    </ion-card>
+  </div>
+  <div *ngIf="muralDeDisciplinas2">
+    <!-- <ion-card id="muralDeDisciplinas2" [hidden]=muralDeDisciplinas2 *ngFor="let disciplina of listaDisciplinas"> -->
+        <ion-card id="muralDeDisciplinas2" *ngFor="let disciplina of listaDisciplinas">
       <ion-card-header>
-          Disciplina: {{disciplina.disciplina.nome}}
+        Disciplina: {{disciplina.nome}}
         </ion-card-header>
         <ion-card-content>
-            Código: {{disciplina.disciplina.codigo}}
+            Código: {{disciplina.codigo}}
         </ion-card-content>     
     
-  </ion-card>
-
-  <ion-card id="muralDeDisciplinas2" [hidden]=muralDeDisciplinas2 *ngFor="let disciplina of listaDisciplinas">
-    <ion-card-header>
-      Disciplina: {{disciplina.nome}}
-      </ion-card-header>
-      <ion-card-content>
-          Código: {{disciplina.codigo}}
-      </ion-card-content>     
-  
-</ion-card>
-  
+    </ion-card>
+  </div>
 </ion-content>

@@ -10,8 +10,10 @@ export class DisciplinasPage {
 
   private lista = new Array<any>();
   private listaDisciplinas = new Array<any>();
-  public muralDeDisciplinas1 = false;
-  public muralDeDisciplinas2 = false;
+  // public muralDeDisciplinas1 = false;
+  public muralDeDisciplinas1;
+  // public muralDeDisciplinas2 = false;
+  public muralDeDisciplinas2;
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams, private userProvider: UsersProvider) {
@@ -21,12 +23,12 @@ export class DisciplinasPage {
 
       if(!aluno){
         this.consultasDisciplinas(this.lista[0].idAluno);
-        this.muralDeDisciplinas1 = false;
-        this.muralDeDisciplinas2 = true;
+        // this.muralDeDisciplinas1 = false;
+        // this.muralDeDisciplinas2 = true;
       }else{
         this.consultasDisciplinasProfessor(idProfessor);
-        this.muralDeDisciplinas1 = true;
-        this.muralDeDisciplinas2 = false;
+        // this.muralDeDisciplinas1 = true;
+        // this.muralDeDisciplinas2 = false;
       }
   }
 
@@ -37,6 +39,10 @@ export class DisciplinasPage {
     this.userProvider.listarDisciplinas(id)
     .then((result: any) => {
     this.listaDisciplinas = result;
+    // this.muralDeDisciplinas1 = false;
+    this.muralDeDisciplinas1 = true;
+    // this.muralDeDisciplinas2 = false;
+    // this.muralDeDisciplinas2 = true;
   });
   }
 
@@ -47,6 +53,11 @@ export class DisciplinasPage {
   this.userProvider.listarDisciplinasProfessor(id)
   .then((result: any) => {
   this.listaDisciplinas = result;
+  // this.muralDeDisciplinas1 = true;
+  // this.muralDeDisciplinas2 = false;
+  this.muralDeDisciplinas2 = true;
+  // this.muralDeDisciplinas1 = false;
+
 });
 }
 }

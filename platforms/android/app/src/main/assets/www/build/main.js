@@ -35,7 +35,6 @@ var EnvioPage = (function () {
         this.destinatario = new Array();
         this.remetente = new Array();
         this.mensagemEnviada = new Array();
-        this.testeRemetente = new Array();
         this.remetente = JSON.parse(localStorage.getItem("remetente"));
         this.idRemetente = JSON.parse(localStorage.getItem("idRemetente"));
         console.log(this.idRemetente);
@@ -181,7 +180,6 @@ var LoginPageModule = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
-/* unused harmony export listaRetorno */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(79);
@@ -311,12 +309,6 @@ var LoginPage = (function () {
     return LoginPage;
 }());
 
-var listaRetorno = (function () {
-    function listaRetorno() {
-    }
-    return listaRetorno;
-}());
-
 //# sourceMappingURL=login.js.map
 
 /***/ }),
@@ -348,20 +340,18 @@ var DisciplinasPage = (function () {
         this.userProvider = userProvider;
         this.lista = new Array();
         this.listaDisciplinas = new Array();
-        this.muralDeDisciplinas1 = false;
-        this.muralDeDisciplinas2 = false;
         this.lista = JSON.parse(localStorage.getItem('listaObjetos'));
         var aluno = JSON.parse(localStorage.getItem("flagHtml"));
         var idProfessor = JSON.parse(localStorage.getItem("idRemetente"));
         if (!aluno) {
             this.consultasDisciplinas(this.lista[0].idAluno);
-            this.muralDeDisciplinas1 = false;
-            this.muralDeDisciplinas2 = true;
+            // this.muralDeDisciplinas1 = false;
+            // this.muralDeDisciplinas2 = true;
         }
         else {
             this.consultasDisciplinasProfessor(idProfessor);
-            this.muralDeDisciplinas1 = true;
-            this.muralDeDisciplinas2 = false;
+            // this.muralDeDisciplinas1 = true;
+            // this.muralDeDisciplinas2 = false;
         }
     }
     /*
@@ -372,8 +362,10 @@ var DisciplinasPage = (function () {
         this.userProvider.listarDisciplinas(id)
             .then(function (result) {
             _this.listaDisciplinas = result;
-            console.log("Lista disciplinas");
-            console.log(_this.listaDisciplinas);
+            // this.muralDeDisciplinas1 = false;
+            _this.muralDeDisciplinas1 = true;
+            // this.muralDeDisciplinas2 = false;
+            // this.muralDeDisciplinas2 = true;
         });
     };
     /*
@@ -384,13 +376,15 @@ var DisciplinasPage = (function () {
         this.userProvider.listarDisciplinasProfessor(id)
             .then(function (result) {
             _this.listaDisciplinas = result;
-            console.log("Lista disciplinas");
-            console.log(_this.listaDisciplinas);
+            // this.muralDeDisciplinas1 = true;
+            // this.muralDeDisciplinas2 = false;
+            _this.muralDeDisciplinas2 = true;
+            // this.muralDeDisciplinas1 = false;
         });
     };
     DisciplinasPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-list',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/disciplinas/disciplinas.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Disciplinas</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding id="page2" style="background-color:#FFFFFF;">\n\n  <ion-card id="muralDeDisciplinas1" [hidden]=muralDeDisciplinas1 *ngFor="let disciplina of listaDisciplinas">\n      <ion-card-header>\n          Disciplina: {{disciplina.disciplina.nome}}\n        </ion-card-header>\n        <ion-card-content>\n            Código: {{disciplina.disciplina.codigo}}\n        </ion-card-content>     \n    \n  </ion-card>\n\n  <ion-card id="muralDeDisciplinas2" [hidden]=muralDeDisciplinas2 *ngFor="let disciplina of listaDisciplinas">\n    <ion-card-header>\n      Disciplina: {{disciplina.nome}}\n      </ion-card-header>\n      <ion-card-content>\n          Código: {{disciplina.codigo}}\n      </ion-card-content>     \n  \n</ion-card>\n  \n</ion-content>\n'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/disciplinas/disciplinas.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"/home/andre/andre/ionic/appMenu/src/pages/disciplinas/disciplinas.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Disciplinas</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding id="page2" style="background-color:#FFFFFF;">\n  <div *ngIf="muralDeDisciplinas1">\n    <!-- <ion-card id="muralDeDisciplinas1" [hidden]=muralDeDisciplinas1 *ngFor="let disciplina of listaDisciplinas"> -->\n        <ion-card id="muralDeDisciplinas1" *ngFor="let disciplina of listaDisciplinas">\n        <ion-card-header>\n            Disciplina: {{disciplina.disciplina.nome}}\n          </ion-card-header>\n          <ion-card-content>\n              Código: {{disciplina.disciplina.codigo}}\n          </ion-card-content>     \n      \n    </ion-card>\n  </div>\n  <div *ngIf="muralDeDisciplinas2">\n    <!-- <ion-card id="muralDeDisciplinas2" [hidden]=muralDeDisciplinas2 *ngFor="let disciplina of listaDisciplinas"> -->\n        <ion-card id="muralDeDisciplinas2" *ngFor="let disciplina of listaDisciplinas">\n      <ion-card-header>\n        Disciplina: {{disciplina.nome}}\n        </ion-card-header>\n        <ion-card-content>\n            Código: {{disciplina.codigo}}\n        </ion-card-content>     \n    \n    </ion-card>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/andre/andre/ionic/appMenu/src/pages/disciplinas/disciplinas.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_users_users__["a" /* UsersProvider */]])
     ], DisciplinasPage);
@@ -846,11 +840,14 @@ var HomePage = (function () {
         this.muralDeMensagens_card22 = false;
         this.lista = JSON.parse(localStorage.getItem('listaObjetos'));
         this.muralDeMensagens_card21 = JSON.parse(localStorage.getItem('flagHtml'));
+        var id;
         if (this.muralDeMensagens_card21 != false) {
             this.muralDeMensagens_card22 = false;
+            id = document.getElementById('Envio');
+            id.hidden = false;
         }
         else {
-            var id = document.getElementById('Envio');
+            id = document.getElementById('Envio');
             id.hidden = true;
             this.muralDeMensagens_card22 = true;
         }
