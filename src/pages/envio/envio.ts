@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, DateTime } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 
 /**
@@ -28,7 +28,6 @@ export class EnvioPage {
   
   private mensagemEnviada = new Array<any>();
   
-  private testeRemetente = new Array<any>();
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private toast: ToastController, private userProvider: UsersProvider) {

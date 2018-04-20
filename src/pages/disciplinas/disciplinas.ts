@@ -10,14 +10,24 @@ export class DisciplinasPage {
 
   private lista = new Array<any>();
   private listaDisciplinas = new Array<any>();
+  public muralDeDisciplinas1 = false;
+  public muralDeDisciplinas2 = false;
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams, private userProvider: UsersProvider) {
       this.lista = JSON.parse(localStorage.getItem('listaObjetos'));
-      //console.log("Lista disciplinas");
-      this.consultasDisciplinas(this.lista[0].idAluno);
-      //console.log(this.lista);
-    // this.consultasDisciplinas(this.lista[0].idAluno);
+      var aluno = JSON.parse(localStorage.getItem("flagHtml"));
+      var idProfessor = JSON.parse(localStorage.getItem("idRemetente"));
+
+      if(!aluno){
+        this.consultasDisciplinas(this.lista[0].idAluno);
+        this.muralDeDisciplinas1 = false;
+        this.muralDeDisciplinas2 = true;
+      }else{
+        this.consultasDisciplinasProfessor(idProfessor);
+        this.muralDeDisciplinas1 = true;
+        this.muralDeDisciplinas2 = false;
+      }
   }
 
   /*
@@ -27,8 +37,16 @@ export class DisciplinasPage {
     this.userProvider.listarDisciplinas(id)
     .then((result: any) => {
     this.listaDisciplinas = result;
-    console.log("Lista disciplinas");
-    console.log(this.listaDisciplinas);
   });
   }
+
+   /*
+    MÉTODO PARA CONSULTAR DISCIPLINAS DO PROFESSOR
+  */
+ consultasDisciplinasProfessor(id: number){
+  this.userProvider.listarDisciplinasProfessor(id)
+  .then((result: any) => {
+  this.listaDisciplinas = result;
+});
+}
 }

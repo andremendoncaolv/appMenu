@@ -28,6 +28,24 @@
           </ion-item>
           <ion-item id="destinatorioMensagem2">
             <ion-input type="destinatarios" placeholder="Destinatario" name="destinatarios" [(ngModel)]="destinatarios"></ion-input>
+            <ion-item>
+              <ion-label>Alunos</ion-label>
+              <ion-select *ngFor="let disciplina of listaDisciplinas">
+                <ion-option value="f" selected="true">Female</ion-option>
+                <ion-option value="m">Male</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label>Toppings</ion-label>
+              <ion-select [(ngModel)]="toppings" multiple="true">
+                <ion-option>Bacon</ion-option>
+                <ion-option>Black Olives</ion-option>
+                <ion-option>Extra Cheese</ion-option>
+                <ion-option>Mushrooms</ion-option>
+                <ion-option>Pepperoni</ion-option>
+                <ion-option>Sausage</ion-option>
+              </ion-select>
+            </ion-item>
          </ion-item>
       </ion-card-header>    
     

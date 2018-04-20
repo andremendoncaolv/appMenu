@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { UsersProvider } from '../../providers/users/users';
-import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -117,17 +116,4 @@ export class LoginPage {
   }
   
   
-}
-export class listaRetorno{
-  idAluno: string // usuario
-  email: string; //usuario
-  senha: string; //usuario
-  nomeRemetente: string; //lista de usuarios
-  emailRemetente: string;
-  cargoRemetente: string;
-  tituloMensagem: string;
-  textoMensagem: string;
-  dataMensagem: string;
-  nomeUsuario: string
-
 }

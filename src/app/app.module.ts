@@ -13,6 +13,7 @@ import { UsersProvider } from '../providers/users/users';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { EnvioPage } from '../pages/envio/envio';
+import { SairPage } from '../pages/sair/sair';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { EnvioPage } from '../pages/envio/envio';
     HomePage,
     DisciplinasPage,
     EnvioPage,
+    SairPage,
   
   ],
   imports: [
@@ -35,7 +37,8 @@ import { EnvioPage } from '../pages/envio/envio';
     MyApp,
     HomePage,
     DisciplinasPage,
-    EnvioPage    
+    EnvioPage,    
+    SairPage
   ],
   providers: [
     StatusBar,

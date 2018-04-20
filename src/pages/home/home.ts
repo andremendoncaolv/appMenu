@@ -19,6 +19,8 @@ export class HomePage {
     if(this.muralDeMensagens_card21 != false){
       this.muralDeMensagens_card22 = false;
     }else{
+      var id = document.getElementById('Envio');
+      id.hidden = true;
       this.muralDeMensagens_card22 = true;
     }
     
